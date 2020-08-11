@@ -66,8 +66,9 @@ def train_intent_entity_model(file_path='nlu.md'):
         print(classification_report(y_test, y_pred), file=report)
 
     #save intent model
-    dill.dump(svc, 'morphine_intent_model.svc')
-    print ('intent model saved : morphine_intent_model.svc')
+    with open('morphine_intent_model.svc','wb') as f:
+        dill.dump(svc, f)
+        print ('intent model saved : morphine_intent_model.svc')
 
     # split entity dataset by train & val
     X_train, X_test, y_train, y_test = train_test_split(
