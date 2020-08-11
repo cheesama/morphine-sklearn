@@ -1,0 +1,9 @@
+pynori
+tqdm
+scikit-learn
+pandas
+dill
+python-crfsuite
+fastapi
+uvicorn
+dill
