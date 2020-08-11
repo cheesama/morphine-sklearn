@@ -1,0 +1,18 @@
+name: intent-entity-train-val
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+		  pip install --upgrade pip
+          pip install -r requirements.txt
+          cd morphine && wget ${{ secrets.DATA_PATH }} && python trainer.py
+
+          # Write your CML report
+          cml-send-comment report.md
