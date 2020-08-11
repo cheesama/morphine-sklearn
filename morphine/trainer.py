@@ -54,7 +54,7 @@ def train_intent_entity_model(file_path='nlu.md'):
     # split intent dataset by train & val
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=88)
 
-    svc = make_pipeline(CountVectorizer(analyzer="word", tokenizer=tokenize), SVC())
+    svc = make_pipeline(CountVectorizer(analyzer="word", tokenizer=tokenize), SVC(probability=True))
     print("intent model training(with SVC)")
     svc.fit(X_train, y_train)
     print("intent model train done, validation reporting")
