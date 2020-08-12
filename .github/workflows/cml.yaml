@@ -21,9 +21,10 @@ jobs:
         uses: docker/build-push-action@v1
         with:
             username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
             registry: docker.pkg.github.com
             repository: cheesama/morphine-sklearn/morphine
             tag_with_ref: true
+            # docker login https://docker.pkg.github.com -u USERNAME --password-stdin
 
 
