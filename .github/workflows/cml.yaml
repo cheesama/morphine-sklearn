@@ -5,8 +5,8 @@ jobs:
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
-      - uses: actions/checkout@v2
       - name: model_training
+      - uses: actions/checkout@v2
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -17,11 +17,13 @@ jobs:
             # Write your CML report
             cml-send-comment report.md
 
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Push Docker image to GitHub Packages
+      - uses: docker/build-push-action@v1
+        with:
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+            registry: docker.pkg.github.com
+            repository: cheesama/morphine-sklearn/morphine
+            tag_with_ref: true
 
-      - name: Docker Image Build and Push
-        run: |
-            docker build -t docker.pkg.github.com/cheesama/morphine-sklearn/morphine:${{ steps.date.outputs.date }} .
-            docker push docker.pkg.github.com/cheesama/morphine-sklearn/morphine:${{ steps.date.outputs.date }}
+
