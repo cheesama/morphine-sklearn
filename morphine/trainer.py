@@ -22,7 +22,7 @@ import re
 import pycrfsuite
 import dill
 
-def train_intent_entity_model(file_path='nlu.md'):
+def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_intent_model.svc', entity_model_name='morphine_entity_model.crfsuite'):
     """
     file_path: dataset file path(rasa nlu.md format)
     """
