@@ -23,5 +23,5 @@ jobs:
 
       - name: Docker Image Build and Push
         run: |
-            docker build -t docker.pkg.github.com/cheesama/morphine-sklearn/morphine:${{ steps.date.outputs.date }}
+            docker build -t docker.pkg.github.com/cheesama/morphine-sklearn/morphine:${{ steps.date.outputs.date }} .
             docker push docker.pkg.github.com/cheesama/morphine-sklearn/morphine:${{ steps.date.outputs.date }}
