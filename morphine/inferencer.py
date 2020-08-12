@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from utils import tokenize, convert_ner_data_format, sent2features
+
 import dill
 import pycrfsuite
 
@@ -31,10 +33,30 @@ async def health():
 
 @app.post("/predict/intent")
 async def predict_intent(text: str):
-    return {}
+    name = intent_model.predict([text])[0]
+    confidence = intent_model.predict_proba([text])[0].max()
+
+    return {'name': name, 'confidence': confidence, 'Classifier': 'morphine_intent_model.svc'}
 
 @app.post("/predict/entity")
 async def predict_entity(text: str):
-    return {}
+    feature = sent2features(convert_ner_data_format(text))
+    entities = entity_model.tag(feature)
+    tokens = tokenize(text)
+
+    result = []
+    token_value = ''
+    entity_value = ''
+    for i, (token, entity) in enumerate(zip(tokens, entities)):
+        if entity != 'O':
+            if i < len(entities) - 1 and entities[i].split('-')[1] == entities[i+1].split('-')[1]:
+                entity_value = entity.replace('B-','').replace('I-','')
+                token_value += tokena
+            else:
+                result.append({'entity': entity_value, 'value': token_value})
+                token_value = ''
+                entity_value = ''
+
+    return {'entities': result, 'Extractor': 'morphine_entity_model.crfsuite'}
 
  
