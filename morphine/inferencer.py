@@ -49,9 +49,9 @@ async def predict_entity(text: str):
     entity_value = ''
     for i, (token, entity) in enumerate(zip(tokens, entities)):
         if entity != 'O':
-            if i < len(entities) - 1 and entities[i].split('-')[1] == entities[i+1].split('-')[1]:
+            if i < len(entities) - 1 and entities[i][2:] == entities[i+1][2:]:
                 entity_value = entity.replace('B-','').replace('I-','')
-                token_value += tokena
+                token_value += token
             else:
                 result.append({'entity': entity_value, 'value': token_value})
                 token_value = ''
