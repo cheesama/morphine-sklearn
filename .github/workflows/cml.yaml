@@ -17,6 +17,8 @@ jobs:
             # Write your CML report
             cml-send-comment report.md
 
+            echo ::set-env name=REPORT::$(cat report.md)
+
       - name: Push Docker image to GitHub Packages
         uses: docker/build-push-action@v1
         with:
@@ -31,7 +33,7 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env: 
             SLACK_TITLE: morphine intent & entity validation report
-            SLACK_MESSAGE: $(cd morphine && cat report.md)
+            SLACK_MESSAGE: $REPORT
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
 
