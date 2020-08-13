@@ -32,6 +32,6 @@ jobs:
         env: 
             SLACK_TITLE: morphine intent & entity validation report
             SLACK_MESSAGE: $(cd morphine && cat report.md)
-            SLCAK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
 
