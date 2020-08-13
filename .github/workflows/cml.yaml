@@ -1,0 +1,30 @@
+name: intent-entity-train-val
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: model_training
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            cd morphine && wget ${{ secrets.DATA_PATH }} && python trainer.py
+
+            # Write your CML report
+            cml-send-comment report.md
+
+      - name: Push Docker image to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+            registry: docker.pkg.github.com
+            repository: cheesama/morphine-sklearn/morphine
+            tag_with_ref: true
+            # docker login https://docker.pkg.github.com -u USERNAME --password-stdin
+
+

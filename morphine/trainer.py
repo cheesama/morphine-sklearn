@@ -20,8 +20,9 @@ from utils import (
 
 import re
 import pycrfsuite
+import dill
 
-def train_intent_entity_model(file_path: str):
+def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_intent_model.svc', entity_model_name='morphine_entity_model.crfsuite'):
     """
     file_path: dataset file path(rasa nlu.md format)
     """
@@ -53,12 +54,21 @@ def train_intent_entity_model(file_path: str):
     # split intent dataset by train & val
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=88)
 
-    svc = make_pipeline(CountVectorizer(analyzer="word", tokenizer=tokenize), SVC())
+    svc = make_pipeline(CountVectorizer(analyzer="word", tokenizer=tokenize), SVC(probability=True))
     print("intent model training(with SVC)")
     svc.fit(X_train, y_train)
     print("intent model train done, validation reporting")
     y_pred = svc.predict(X_test)
     print(classification_report(y_test, y_pred))
+
+    with open('report.md', 'a+') as report:
+        print('Intent Classification Performance', file=report)
+        print(classification_report(y_test, y_pred), file=report)
+
+    #save intent model
+    with open('morphine_intent_model.svc','wb') as f:
+        dill.dump(svc, f)
+        print ('intent model saved : morphine_intent_model.svc')
 
     # split entity dataset by train & val
     X_train, X_test, y_train, y_test = train_test_split(
@@ -85,13 +95,20 @@ def train_intent_entity_model(file_path: str):
     )
 
     print("entity model training(with CRF)")
-    trainer.train("morphine-entity-model.crfsuite")
+    trainer.train("morphine_entity_model.crfsuite")
+    print ('entity model saved : morphine_entity_model.crfsuite')
     print("entity model train done, validation reporting")
     tagger = pycrfsuite.Tagger()
-    tagger.open("morphine-entity-model.crfsuite")
+    tagger.open("morphine_entity_model.crfsuite")
 
     y_pred = []
     for test_feature in X_test:
         y_pred.append(tagger.tag(test_feature))
 
     print(bio_classification_report(y_test, y_pred))
+
+    with open('report.md', 'a+') as report:
+        print('\nEntity Classification Performance', file=report)
+        print(bio_classification_report(y_test, y_pred), file=report)
+
+train_intent_entity_model()

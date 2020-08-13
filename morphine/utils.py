@@ -24,8 +24,7 @@ def tokenize(text):
 def tokenize_fn(text):
     return nori.do_analysis(text)
 
-
-def convert_ner_data_format(line, tokenize_fn):
+def convert_ner_data_format(line, tokenize_fn=tokenize_fn):
     """
     line: ex)[데이터](Data) 사용량 얼마나 되나 알려줄래?
     """
