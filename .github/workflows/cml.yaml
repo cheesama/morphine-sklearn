@@ -17,7 +17,7 @@ jobs:
             # Write your CML report
             cml-send-comment report.md
 
-            echo ::set-env name=REPORT::$(cat report.md)
+            echo "::set-env name=REPORT::$(cat report.md)"
 
       - name: Push Docker image to GitHub Packages
         uses: docker/build-push-action@v1
