@@ -30,10 +30,10 @@ jobs:
             # docker login https://docker.pkg.github.com -u USERNAME --password-stdin
             
       - name: Validataion Result Slack notification
-        uses: rtCamp/action-slack-notify@master
+        uses: tokorom/action-slack-incoming-webhook@master
         env: 
-            SLACK_TITLE: morphine intent & entity validation report
-            SLACK_MESSAGE: $REPORT
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+            text: ${{ env.REPORT }}
 
 
