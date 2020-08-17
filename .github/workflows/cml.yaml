@@ -34,6 +34,14 @@ jobs:
         env: 
             INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-            text: ${{ env.REPORT }}
+            text: Check Validation Report
+            attachments: |
+                [
+                    {
+                        "author_name": "${{ github.actor }}",
+                        "text": "${{ env.REPORT }}"
+                    }
+                ]
+
 
 
