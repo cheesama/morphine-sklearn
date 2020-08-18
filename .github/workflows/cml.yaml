@@ -39,7 +39,14 @@ jobs:
                 [
                     {
                         "author_name": "${{ github.actor }}",
-                        "text": "${{ env.REPORT }}"
+                        "author_link": "http://github.com/cheesama",
+                        "fields":[
+                            {
+                                "title": "Below is valid set classification report",
+                                "value": "${{ env.REPORT }}",
+                                "short": false
+                            }
+                        ]
                     }
                 ]
 
