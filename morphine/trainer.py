@@ -69,9 +69,9 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     with open('report.md', 'a+') as report:
         print('Intent Classification Performance', file=report)
         report = classification_report(y_test, y_pred, output_dict=True)
-        print(f"{report['accuracy']}", file=report)
-        print(f"{report['macro avg']}", file=report)
-        print(f"{report['weighted avg']}", file=report)
+        print(f"accuracy: {report['accuracy']}", file=report)
+        print(f"macro avg: {report['macro avg']}", file=report)
+        print(f"weighted avg: {report['weighted avg']}", file=report)
 
     #save intent model
     with open('morphine_intent_model.svc','wb') as f:
@@ -118,8 +118,8 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     with open('report.md', 'a+') as report:
         print('\nEntity Classification Performance', file=report)
         report = bio_classification_report(y_test, y_pred, output_dict=True)
-        print(f"{report['micro avg']}", file=report)
-        print(f"{report['macro avg']}", file=report)
-        print(f"{report['weighted avg']}", file=report)
-        print(f"{report['samples avg']}", file=report)
+        print(f"micro avg: {report['micro avg']}", file=report)
+        print(f"macro avg: {report['macro avg']}", file=report)
+        print(f"weighted avg: {report['weighted avg']}", file=report)
+        print(f"samples avg: {report['samples avg']}", file=report)
 train_intent_entity_model()
