@@ -22,6 +22,11 @@ import re
 import pycrfsuite
 import dill
 
+def parse_rasa_nlu_data(file_path):
+    intent_X = [] # intent sentences
+    intent_y = [] # intent lables
+    entity_dataset = [] # entity feature
+
 def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_intent_model.svc', entity_model_name='morphine_entity_model.crfsuite'):
     """
     file_path: dataset file path(rasa nlu.md format)

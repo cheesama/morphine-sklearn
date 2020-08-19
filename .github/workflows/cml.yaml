@@ -30,25 +30,6 @@ jobs:
             # docker login https://docker.pkg.github.com -u USERNAME --password-stdin
             
       - name: Validataion Result Slack notification
-        uses: tokorom/action-slack-incoming-webhook@master
-        env: 
-            INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-            text: Check Validation Report
-            attachments: |
-                [
-                    {
-                        "author_name": "${{ github.actor }}",
-                        "author_link": "http://github.com/cheesama",
-                        "fields":[
-                            {
-                                "title": "Below is valid set classification report",
-                                "value": "${{ env.REPORT }}",
-                                "short": false
-                            }
-                        ]
-                    }
-                ]
-
-
+        run: |
+            cd morphine && python -c "from utils import slack_report; slack_report('${{ secrets.SLACK_WEBHOOK }}')"
 
