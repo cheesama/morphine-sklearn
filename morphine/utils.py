@@ -182,7 +182,7 @@ def bio_classification_report(y_true, y_pred):
 
 def slack_report(webhook_url, file_name='report.md', title='Intent & Entity Validation Report'):
     content = open(file_name).readlines()
-    content = '\n'.join(content)
+    content = ''.join(content)
 
     payload = {
         "text": title,
