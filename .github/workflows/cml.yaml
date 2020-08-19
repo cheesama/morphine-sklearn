@@ -10,6 +10,7 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
+            apt-get install python3-dev
             pip install --upgrade pip
             pip install -r requirements.txt
             cd morphine && wget ${{ secrets.DATA_PATH }} && python trainer.py
