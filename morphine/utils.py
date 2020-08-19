@@ -157,7 +157,7 @@ def sent2tokens(sent):
     return [token for token, postag, label in sent]
 
 
-def bio_classification_report(y_true, y_pred):
+def bio_classification_report(y_true, y_pred, output_dict=True):
     """
     Classification report for a list of BIO-encoded sequences.
     It computes token-level metrics and discards "O" labels.
@@ -178,6 +178,7 @@ def bio_classification_report(y_true, y_pred):
         y_pred_combined,
         labels=[class_indices[cls] for cls in tagset],
         target_names=tagset,
+        output_dict=output_dict
     )
 
 def slack_report(webhook_url, file_name='report.md', title='Intent & Entity Validation Report'):
