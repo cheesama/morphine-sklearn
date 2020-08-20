@@ -66,12 +66,12 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     y_pred = svc.predict(X_test)
     print(classification_report(y_test, y_pred))
 
-    with open('report.md', 'a+') as report:
-        print('Intent Classification Performance', file=report)
+    with open('report.md', 'a+') as report_file:
         report = classification_report(y_test, y_pred, output_dict=True)
-        print(f"accuracy: {str(report['accuracy'])}", file=report)
-        print(f"macro avg: {str(report['macro avg'])}", file=report)
-        print(f"weighted avg: {str(report['weighted avg'])}", file=report)
+        print('Intent Classification Performance', file=report_file)
+        print(f"accuracy: {report['accuracy']}", file=report_file)
+        print(f"macro avg: {report['macro avg']}", file=report_file)
+        print(f"weighted avg: {report['weighted avg'])}", file=report_file)
 
     #save intent model
     with open('morphine_intent_model.svc','wb') as f:
@@ -115,12 +115,12 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
 
     print(bio_classification_report(y_test, y_pred))
 
-    with open('report.md', 'a+') as report:
-        print('\nEntity Classification Performance', file=report)
+    with open('report.md', 'a+') as report_file:
         report = bio_classification_report(y_test, y_pred, output_dict=True)
-        print(f"micro avg: {str(report['micro avg'])}", file=report)
-        print(f"macro avg: {str(report['macro avg'])}", file=report)
-        print(f"weighted avg: {str(report['weighted avg'])}", file=report)
-        print(f"samples avg: {str(report['samples avg'])}", file=report)
+        print('\nEntity Classification Performance', file=report_file)
+        print(f"micro avg: {str(report['micro avg'])}", file=report_file)
+        print(f"macro avg: {str(report['macro avg'])}", file=report_file)
+        print(f"weighted avg: {str(report['weighted avg'])}", file=report_file)
+        print(f"samples avg: {str(report['samples avg'])}", file=report_file)
 
 train_intent_entity_model()
