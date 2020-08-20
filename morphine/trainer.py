@@ -6,6 +6,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 
 from tqdm import tqdm
+from pprint import pprint
 
 from utils import (
     tokenize,
@@ -69,9 +70,9 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     with open('report.md', 'a+') as report_file:
         report = classification_report(y_test, y_pred, output_dict=True)
         print('Intent Classification Performance', file=report_file)
-        print(f"accuracy: {report['accuracy']}", file=report_file)
-        print(f"macro avg: {report['macro avg']}", file=report_file)
-        print(f"weighted avg: {report['weighted avg']}", file=report_file)
+        pprint(f"accuracy: {report['accuracy']}", stream=report_file)
+        pprint(f"macro avg: {report['macro avg']}", stream=report_file)
+        pprint(f"weighted avg: {report['weighted avg']}", stream=report_file)
 
     #save intent model
     with open('morphine_intent_model.svc','wb') as f:
@@ -118,9 +119,9 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     with open('report.md', 'a+') as report_file:
         report = bio_classification_report(y_test, y_pred, output_dict=True)
         print('\nEntity Classification Performance', file=report_file)
-        print(f"micro avg: {report['micro avg']}", file=report_file)
-        print(f"macro avg: {report['macro avg']}", file=report_file)
-        print(f"weighted avg: {report['weighted avg']}", file=report_file)
-        print(f"samples avg: {report['samples avg']}", file=report_file)
+        pprint(f"micro avg: {report['micro avg']}", stream=report_file)
+        pprint(f"macro avg: {report['macro avg']}", stream=report_file)
+        pprint(f"weighted avg: {report['weighted avg']}", stream=report_file)
+        pprint(f"samples avg: {report['samples avg']}", stream=report_file)
 
 train_intent_entity_model()
