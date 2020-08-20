@@ -22,6 +22,11 @@ import re
 import pycrfsuite
 import dill
 
+def parse_rasa_nlu_data(file_path):
+    intent_X = [] # intent sentences
+    intent_y = [] # intent lables
+    entity_dataset = [] # entity feature
+
 def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_intent_model.svc', entity_model_name='morphine_entity_model.crfsuite'):
     """
     file_path: dataset file path(rasa nlu.md format)
@@ -61,9 +66,12 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
     y_pred = svc.predict(X_test)
     print(classification_report(y_test, y_pred))
 
-    with open('report.md', 'a+') as report:
-        print('Intent Classification Performance', file=report)
-        print(classification_report(y_test, y_pred), file=report)
+    with open('report.md', 'a+') as report_file:
+        report = classification_report(y_test, y_pred, output_dict=True)
+        print('Intent Classification Performance', file=report_file)
+        print(f"accuracy: {report['accuracy']}", file=report_file)
+        print(f"macro avg: {report['macro avg']}", file=report_file)
+        print(f"weighted avg: {report['weighted avg']}", file=report_file)
 
     #save intent model
     with open('morphine_intent_model.svc','wb') as f:
@@ -107,8 +115,12 @@ def train_intent_entity_model(file_path='nlu.md', intent_model_name='morphine_in
 
     print(bio_classification_report(y_test, y_pred))
 
-    with open('report.md', 'a+') as report:
-        print('\nEntity Classification Performance', file=report)
-        print(bio_classification_report(y_test, y_pred), file=report)
+    with open('report.md', 'a+') as report_file:
+        report = bio_classification_report(y_test, y_pred, output_dict=True)
+        print('\nEntity Classification Performance', file=report_file)
+        print(f"micro avg: {report['micro avg']}", file=report_file)
+        print(f"macro avg: {report['macro avg']}", file=report_file)
+        print(f"weighted avg: {report['weighted avg']}", file=report_file)
+        print(f"samples avg: {report['samples avg']}", file=report_file)
 
 train_intent_entity_model()

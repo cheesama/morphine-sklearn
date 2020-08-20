@@ -6,4 +6,5 @@ dill
 python-crfsuite
 fastapi
 uvicorn
-dill
+requests
+soynlp
